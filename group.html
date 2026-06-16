@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>分组成语辨析</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="hero hero-group">
+    <div class="hero__bg"></div>
+    <div class="container group-hero-layout">
+      <div>
+        <a class="back-link" href="./index.html">← 返回总目录</a>
+        <span id="groupBadge" class="hero__badge">分组页</span>
+        <h1 id="groupTitle">加载中...</h1>
+        <p id="groupSummary" class="hero__description"></p>
+      </div>
+      <div class="hero__panel">
+        <div class="search-card">
+          <label for="groupSearch" class="search-card__label">组内搜索</label>
+          <div class="search-bar">
+            <input id="groupSearch" type="search" placeholder="搜索本组成语、线索、搭配、易混词" />
+            <button id="clearGroupSearch" type="button">清空</button>
+          </div>
+          <p class="search-card__hint">搜索后会自动定位到第一个匹配词条。</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="container group-main">
+    <section class="card nav-strip">
+      <a id="prevGroup" class="nav-strip__btn" href="#">上一组</a>
+      <a class="nav-strip__center" href="./index.html">总目录</a>
+      <a id="nextGroup" class="nav-strip__btn" href="#">下一组</a>
+    </section>
+    <section class="card section-block">
+      <div class="section-head">
+        <div><p class="eyebrow">Signal Table</p><h2>本组触发信号汇总表</h2></div>
+        <p id="resultSummary" class="section-note"></p>
+      </div>
+      <div id="triggerTable"></div>
+    </section>
+    <section class="card section-block">
+      <div class="section-head section-head--tight">
+        <div><p class="eyebrow">Cards</p><h2>本组成语卡片</h2></div>
+      </div>
+      <div id="idiomList"></div>
+    </section>
+  </main>
+  <div id="detailModal" class="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close="true"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" id="closeModalBtn" type="button" aria-label="关闭">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <script src="./data/catalog.js"></script>
+  <script src="./assets/group.js"></script>
+</body>
+</html>

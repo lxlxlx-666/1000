@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>行测言语1000词</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="hero hero-home">
+    <div class="hero__bg"></div>
+    <div class="container hero__content">
+      <div>
+        <span class="hero__badge">按组分页版</span>
+        <h1 id="siteTitle">行测言语1000词</h1>
+        <p id="siteSubtitle" class="hero__subtitle"></p>
+        <p id="siteDescription" class="hero__description"></p>
+      </div>
+      <div class="hero__panel">
+        <div class="search-card">
+          <label for="catalogSearch" class="search-card__label">目录检索</label>
+          <div class="search-bar">
+            <input id="catalogSearch" type="search" placeholder="搜索组名、主题、关键词，如：传承 / 创新 / 危险" />
+            <button id="clearCatalogSearch" type="button">清空</button>
+          </div>
+          <p class="search-card__hint">首页只做总目录；点击某组后进入独立分组页。</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="container home-main">
+    <section id="statsGrid" class="stats-grid"></section>
+    <section class="card section-block">
+      <div class="section-head">
+        <div><p class="eyebrow">Catalog</p><h2>总目录</h2></div>
+        <p class="section-note">已预留 100 组。后续新增一组时，只需新增一个分组数据文件，并把目录状态改为 active。</p>
+      </div>
+      <div id="catalogGrid" class="catalog-grid"></div>
+    </section>
+  </main>
+  <script src="./data/catalog.js"></script>
+  <script src="./assets/home.js"></script>
+</body>
+</html>
