@@ -1120,3 +1120,134 @@ input {
   filter: brightness(1.03);
   transform: translateY(-1px);
 }
+
+
+/* 首页目录搜索：命中具体词条或分类时高亮显示 */
+.catalog-search-tip {
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border: 1px solid #dbe7ff;
+  border-radius: 14px;
+  background: #f5f8ff;
+  color: #3451b2;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.catalog-row__keywords b.is-match {
+  background: #fff3cd;
+  color: #8a5a00;
+  border: 1px solid #f5d36b;
+  font-weight: 800;
+}
+
+
+/* 详情页底部外部搜索按钮：上下并列 + 指定颜色 */
+.detail-action-box {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.detail-action-box .xuexi-btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  padding: 13px 18px;
+  font-size: 18px;
+  line-height: 1.35;
+  text-align: center;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.detail-action-box .xuexi-btn:not(.fenbi-btn) {
+  background: #c2410c;
+  box-shadow: 0 10px 24px rgba(194, 65, 12, 0.20);
+}
+
+.detail-action-box .xuexi-btn:not(.fenbi-btn):hover {
+  background: #b91c1c;
+}
+
+.detail-action-box .fenbi-btn {
+  background: #2563eb;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.20);
+}
+
+.detail-action-box .fenbi-btn:hover {
+  background: #1d4ed8;
+}
+
+.detail-action-box span {
+  width: 100%;
+  display: block;
+  margin-top: 2px;
+}
+
+
+/* 新版详情栏目：褒贬性多维语境 + 公考收缩校准 */
+.usage-scene-card strong {
+  color: var(--primary);
+}
+
+.scene-example-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.scene-example {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  color: #344054;
+  line-height: 1.7;
+}
+
+.exam-calibration-card {
+  border-color: rgba(180, 35, 24, 0.20);
+  background: linear-gradient(180deg, #fff, #fffafa);
+}
+
+.exam-calibration-card strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b42318;
+  margin-bottom: 8px;
+}
+
+.exam-calibration-index {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #fee4e2;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.exam-rule {
+  color: #101828;
+  line-height: 1.85;
+}
+
+
+/* 细化后的语境栏目：正面 / 负面 / 中性 / 易混边界 */
+.usage-scene-card strong {
+  color: var(--primary);
+}
+
+.usage-scene-card strong:has(+ *) {
+  line-height: 1.4;
+}
+
+/* 浏览器不支持 :has 时也不影响原有显示 */
+.scene-example {
+  font-size: 14px;
+}
+

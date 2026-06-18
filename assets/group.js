@@ -100,7 +100,8 @@
       item.category, item.word, item.pinyin, item.coreMeaning, item.focus, item.objects,
       item.collocations.join(' '), item.triggerClues.join(' '), item.tone, item.toneDetail,
       item.intensity, item.register.join(' '),
-      item.confusion.map(c => `${c.word} ${c.difference}`).join(' ')
+      item.confusion.map(c => `${c.word} ${c.difference}`).join(' '),
+      JSON.stringify(item.usageScenes || []), JSON.stringify(item.examCalibration || [])
     ].join(' ').toLowerCase().includes(query));
   }
 
@@ -126,7 +127,7 @@
       <h4>${item.word}</h4><div class="idiom-card__pinyin">${item.pinyin}</div>
       <p class="idiom-card__core">${item.coreMeaning}</p>
       <div class="chip-row">${item.triggerClues.slice(0, 4).map(x => `<span class="chip">${x}</span>`).join('')}</div>
-      <div class="idiom-card__footer"><span class="idiom-card__hint">完整栏目 / 易混辨析 / 官媒语境</span><button type="button" class="idiom-card__btn" data-action="open-detail" data-id="${item.id}">查看详情</button></div>
+      <div class="idiom-card__footer"><span class="idiom-card__hint">完整栏目 / 易混辨析 / 用法校准</span><button type="button" class="idiom-card__btn" data-action="open-detail" data-id="${item.id}">查看详情</button></div>
     </article>`;
   }
 
@@ -150,15 +151,36 @@
         ${field('程度轻重', item.intensity)}
         ${field('语体风格', item.register.join('、'))}
         ${field('易混辨析', compareList(item.confusion), true)}
-        ${field('官媒 / 权威语境', contextList(item.officialContext), true)}
+        ${field('褒贬性与多维语境', usageSceneList(item.usageScenes), true)}
+        ${field('公考收缩校准', examCalibrationList(item.examCalibration), true)}
       </div>
-      <div class="note-box"><strong>填写提示：</strong>官媒语境在 <code>officialContext</code> 中填写，每条由 <code>sentence</code> 和 <code>usage</code> 组成。</div><div class="detail-action-box"><a class="xuexi-btn" href="${xuexiSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer">去学习强国搜索“${item.word}” →</a><span>打开学习强国搜索页，用于查找官媒/权威语境。</span></div>`;
+      <div class="note-box"><strong>填写提示：</strong><code>usageScenes</code> 用于展示不同褒贬语境、对象语境和易混边界；<code>examCalibration</code> 用于展示公考中“几乎只能选本词”的锁词条件。</div><div class="detail-action-box"><a class="xuexi-btn" href="${xuexiSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer">去学习强国搜索“${item.word}” →</a><a class="xuexi-btn fenbi-btn" href="${fenbiSearchUrl(item.word)}" target="_blank" rel="noopener noreferrer">去粉笔题库搜索“${item.word}” →</a><span>学习强国用于查找官媒/权威语境；粉笔题库搜索需要先在粉笔网页端登录后使用，未登录时可能会跳转登录页或看不到搜索结果。</span></div>`;
   }
 
   function field(label, value, full = false) { return `<div class="detail-item ${full ? 'detail-item--full' : ''}"><span class="detail-item__label">${label}</span><div class="detail-item__value">${value}</div></div>`; }
   function chipList(list) { return `<div class="inline-list">${list.map(x => `<span class="chip">${x}</span>`).join('')}</div>`; }
   function compareList(list) { return `<div class="compare-list">${list.map(x => `<div class="compare-card"><strong>${x.word}</strong><div>${x.difference}</div></div>`).join('')}</div>`; }
-  function contextList(list) { return `<div class="context-list">${list.map((e, i) => `<div class="context-card"><div><span class="context-card__index">${i + 1}</span><strong>例句</strong></div><div class="context-placeholder">${e.sentence || '句子：待填写'}</div><div class="context-placeholder">${e.usage || '用法说明：待填写'}</div></div>`).join('')}</div>`; }
+  function usageSceneList(list) {
+    if (!list || !list.length) return '<div class="empty-state">待补充多维语境。</div>';
+    return `<div class="context-list usage-scene-list">${list.map((e, i) => `
+      <div class="context-card usage-scene-card">
+        <div><span class="context-card__index">${i + 1}</span><strong>${e.scene || '语境'}</strong></div>
+        <div class="context-placeholder">${e.explanation || '用法说明：待填写'}</div>
+        <div class="scene-example-list">${(e.examples || []).map(x => `<div class="scene-example">例：${x}</div>`).join('')}</div>
+      </div>
+    `).join('')}</div>`;
+  }
+
+  function examCalibrationList(list) {
+    if (!list || !list.length) return '<div class="empty-state">待补充公考收缩校准。</div>';
+    return `<div class="compare-list exam-calibration-list">${list.map((e, i) => `
+      <div class="compare-card exam-calibration-card">
+        <strong><span class="exam-calibration-index">${i + 1}</span>${e.trigger || '触发语境'}</strong>
+        <div class="exam-rule">${e.rule || '校准规则：待填写'}</div>
+        <div class="context-placeholder">${e.example || '例句：待填写'}</div>
+      </div>
+    `).join('')}</div>`;
+  }
 
 
   function xuexiSearchUrl(word) {
@@ -176,6 +198,17 @@
         search_method: 'all'
       }),
       _t: Date.now().toString()
+    });
+    return `${base}?${params.toString()}`;
+  }
+
+  function fenbiSearchUrl(word) {
+    const base = 'https://www.fenbi.com/spa/tiku/guide/question/search';
+    const params = new URLSearchParams({
+      q: word,
+      courseSet: 'xingce',
+      course: 'xingce',
+      qType: '1'
     });
     return `${base}?${params.toString()}`;
   }
